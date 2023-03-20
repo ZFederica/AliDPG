@@ -13,9 +13,11 @@ enum EDetector_t {
   kDetectorMuon,
   kDetectorPhosOnly,
   kDetectorNoZDC,
+  kDetectorNoAD,
   kDetectorCentralBarrelTracking,
   kDetectorRun3,
   kDetectorFOCAL,
+  kDetectorFOCALnoFIT,
   kDetectorCustom,
   kNDetectors
 };
@@ -25,9 +27,11 @@ const Char_t *DetectorName[kNDetectors] = {
   "Muon",
   "PhosOnly",
   "NoZDC",
+  "NoAD",
   "CentralBarrelTracking",
   "Run3",
   "FOCAL",
+  "FOCALnoFIT",
   "Custom"
 };
 
@@ -111,6 +115,12 @@ DetectorConfig(Int_t tag)
     iZDC = 0;
     break;
     
+    // kDetectorNoAD
+  case kDetectorNoAD:
+    DetectorDefault();
+    iAD = 0;
+    break;
+      
     // kDetectorCentralBarrelTracking
   case kDetectorCentralBarrelTracking:
     DetectorDefault();
@@ -157,7 +167,7 @@ DetectorConfig(Int_t tag)
 
   if( tag == kDetectorRun3 )
     DetectorInitRun3(tag);
-  else if (tag == kDetectorFOCAL) {
+  else if (tag == kDetectorFOCAL || tag == kDetectorFOCALnoFIT) {
     gROOT->ProcessLine(".x $ALIDPG_ROOT/MC/DetectorInitFOCAL.C");
   }
   else
